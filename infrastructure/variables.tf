@@ -4,6 +4,10 @@ variable "aws_region" {
   default = "us-east-2"
 }
 
+variable "prefix" {
+  default = "igti-fabio-rais"
+}
+
 variable "account" {
   default = 387875303309
 }
