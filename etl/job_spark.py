@@ -1,20 +1,26 @@
 # import libraries
 
-from pyspark.sql import SparkSession
-from pyspark.sql import functions as f
-from py4j.java_gateway import java_import
+import sys
+from awsglue.transforms import *
+from awsglue.utils import getResolvedOptions
+from awsglue.context import GlueContext
+from awsglue.job import Job
+from pyspark.context import SparkContext
+import pyspark.sql.functions as f
 
 # define buckets
 
-load_bucket = 's3://igti-fabio-rais/landing-zone/raw-data'
-save_bucket = 's3://igti-fabio-rais/processing-zone'
+load_bucket = 's3://datalake-igti-fabio-rais/raw-data/'
+save_bucket = 's3://datalake-igti-fabio-rais/staging-zone'
 
-# start Spark session
+## @params: [JOB_NAME]
+args = getResolvedOptions(sys.argv, ['JOB_NAME'])
 
-spark = (
-    SparkSession.builder.appName('desafio-modulo1')
-    .getOrCreate()
-)
+sc = SparkContext()
+glueContext = GlueContext(sc)
+spark = glueContext.spark_session
+job = Job(glueContext)
+job.init(args['JOB_NAME'], args)
 
 # read files
 
@@ -97,8 +103,6 @@ rais = (
 
 # build 'uf' variable
 
-java_import(spark._sc._jvm, "org.apache.spark.sql.api.python.*")
-
 rais = rais.withColumn("uf", f.col("municipio").cast('string').substr(1,2).cast('int'))
 
 # correct variable types
@@ -133,3 +137,5 @@ rais = (
     .format('parquet')
     .save(save_bucket)
 )
+
+job.commit()
