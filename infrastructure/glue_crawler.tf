@@ -3,7 +3,7 @@
 resource "aws_glue_crawler" "processed_data_crawler" {
   name          = "processed-data-crawler"
   role          = aws_iam_role.glue_role.arn
-  database_name = aws_glue_catalog_database.datalake_desafio.name
+  database_name = "edc_mod1_desafio_database"
 
   s3_target {
     path = "s3://${aws_s3_bucket.datalake.bucket}/staging-zone/"
