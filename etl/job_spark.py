@@ -133,7 +133,6 @@ rais = (
     rais
     .coalesce(50)
     .write.mode('overwrite')
-    .partitionBy('ano', 'uf')
     .format('parquet')
     .save(save_bucket)
 )

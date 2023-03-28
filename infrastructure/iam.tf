@@ -80,7 +80,7 @@ resource "aws_iam_policy" "glue_policy" {
             "Resource": [
                 "arn:aws:s3:::aws-glue-*/*",
                 "arn:aws:s3:::*/*aws-glue-*/*",
-                "arn:aws:s3:::igti-fabio-*/*"
+                "arn:aws:s3:::datalake-igti-fabio-*/*"
             ]
         },
         {
