@@ -5,7 +5,7 @@ variable "aws_region" {
 }
 
 variable "prefix" {
-  default = "igti-fabio-rais"
+  default = "igti-fabio-desafio-mod2"
 }
 
 variable "account" {
@@ -34,5 +34,5 @@ locals {
 }
 
 variable "bucket_name" {
-  default = "datalake-igti-fabio-rais"
+  default = "datalake-igti-fabio-desafio-mod2"
 }
